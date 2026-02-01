@@ -28,7 +28,7 @@ body{
   height:18px;
   background:#ff2d55;
   transform:rotate(45deg);
-  animation:float 6s linear infinite;
+  animation:float 5s linear infinite;
 }
 .heart::before,.heart::after{
   content:'';
@@ -42,8 +42,8 @@ body{
 .heart::after{left:-9px;}
 
 @keyframes float{
-  0%{transform:translateY(110vh) rotate(45deg);opacity:1;}
-  100%{transform:translateY(-10vh) rotate(45deg);opacity:0;}
+  from{transform:translateY(110vh) rotate(45deg);}
+  to{transform:translateY(-10vh) rotate(45deg);}
 }
 
 /* CARD */
@@ -60,16 +60,15 @@ body{
 h1{
   color:white;
   margin-bottom:25px;
-  text-shadow:0 0 15px rgba(255,255,255,0.8);
 }
 
 .btns{
   position:relative;
-  height:120px;
+  height:140px;
 }
 
 button{
-  padding:14px 30px;
+  padding:14px 32px;
   border:none;
   border-radius:30px;
   font-size:18px;
@@ -87,8 +86,9 @@ button{
 #no{
   background:white;
   color:#ff4d6d;
-  left:10%;
-  top:60px;
+  left:10px;
+  top:70px;
+  transition:0.05s; /* FAST */
 }
 
 .small{
@@ -100,12 +100,19 @@ button{
 .hidden{display:none;}
 
 .yay{
-  font-size:40px;
+  font-size:38px;
   color:white;
   animation:pulse 1s infinite;
 }
 @keyframes pulse{
   50%{transform:scale(1.1);}
+}
+
+img{
+  width:220px;
+  margin-top:20px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
 /* CONFETTI */
@@ -117,7 +124,6 @@ button{
   animation:fall 3s linear infinite;
 }
 @keyframes fall{
-  from{transform:translateY(-10vh) rotate(0);}
   to{transform:translateY(110vh) rotate(360deg);}
 }
 </style>
@@ -131,7 +137,7 @@ button{
 
   <div class="btns">
     <button id="yes" onclick="yesClick()">YES 😍</button>
-    <button id="no" onmouseover="moveNo()">NO 😜</button>
+    <button id="no" onmouseenter="moveNo()">NO 😜</button>
   </div>
 
   <div class="small">No seems a bit shy 😈😈😈</div>
@@ -140,22 +146,26 @@ button{
 <!-- PAGE 2 -->
 <div class="card hidden" id="page2">
   <div class="yay">YAY 🎉💖</div>
-  <p style="color:white;margin-top:20px;font-size:22px;">
+
+  <!-- HUG IMAGE -->
+  <img src="https://i.imgur.com/9Xn6k0B.png" alt="hug">
+
+  <p style="color:white;margin-top:15px;font-size:22px;">
     I love you<br><b>Krisha Jain</b> ❤️
   </p>
 </div>
 
 <script>
-/* MOVE NO BUTTON */
+/* FAST NO BUTTON */
 function moveNo(){
   const no=document.getElementById("no");
-  const x=Math.random()*200;
-  const y=Math.random()*80;
+  const x=Math.random()*250;
+  const y=Math.random()*100;
   no.style.left=x+"px";
   no.style.top=y+"px";
 }
 
-/* YES CLICK */
+/* YES */
 function yesClick(){
   document.getElementById("page1").classList.add("hidden");
   document.getElementById("page2").classList.remove("hidden");
@@ -167,13 +177,12 @@ for(let i=0;i<30;i++){
   let h=document.createElement("div");
   h.className="heart";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDelay=Math.random()*5+"s";
   document.body.appendChild(h);
 }
 
 /* CONFETTI */
 function confetti(){
-  for(let i=0;i<50;i++){
+  for(let i=0;i<60;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
