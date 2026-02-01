@@ -1,79 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>For Krisha 💖</title>
+<meta charset="UTF-8">
+<title>For Krisha ❤️</title>
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:Segoe UI,sans-serif;
 }
 
 body{
   height:100vh;
   overflow:hidden;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
 }
 
-/* ❤️ HEART BACKGROUND */
+/* ❤️ BACKGROUND HEARTS */
 .heart{
   position:absolute;
-  font-size:24px;
-  animation: float 12s linear infinite;
-  opacity:0.8;
+  animation:float 12s linear infinite;
+  opacity:0.7;
 }
 
 @keyframes float{
-  0%{transform:translateY(110vh);}
-  100%{transform:translateY(-10vh);}
+  from{transform:translateY(110vh);}
+  to{transform:translateY(-10vh);}
 }
 
-/* 💎 CARD */
+/* 💌 CARD */
 .card{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  background:rgba(255,255,255,0.25);
-  backdrop-filter: blur(15px);
-  padding:35px 45px;
-  border-radius:20px;
-  text-align:center;
   width:360px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  padding:35px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(14px);
+  border-radius:22px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
 }
 
 .card h1{
+  color:white;
   font-size:22px;
   margin-bottom:25px;
-  color:#fff;
 }
 
-.buttons{
+/* 🔘 BUTTON AREA */
+.btn-box{
   position:relative;
-  height:60px;
+  height:80px;
 }
 
 button{
-  padding:12px 30px;
-  font-size:16px;
+  padding:12px 32px;
   border:none;
   border-radius:30px;
+  font-size:16px;
   cursor:pointer;
-  transition:0.2s;
+  position:absolute;
+  top:20px;
 }
 
 #yes{
+  left:20px;
   background:#ff4d6d;
   color:white;
 }
 
 #no{
-  position:absolute;
-  right:0;
+  right:20px;
   background:white;
 }
 
@@ -87,15 +88,15 @@ button{
 
 <body>
 
-<!-- 💖 HEARTS -->
+<!-- ❤️ HEARTS -->
 <script>
-for(let i=0;i<40;i++){
+for(let i=0;i<45;i++){
   let h=document.createElement("div");
   h.className="heart";
   h.innerHTML="❤️";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(8+Math.random()*6)+"s";
   h.style.fontSize=(16+Math.random()*20)+"px";
+  h.style.animationDuration=(8+Math.random()*6)+"s";
   document.body.appendChild(h);
 }
 </script>
@@ -104,7 +105,7 @@ for(let i=0;i<40;i++){
 <div class="card">
   <h1>Krisha Jain ❤️<br>Will you be my Valentine?</h1>
 
-  <div class="buttons">
+  <div class="btn-box" id="box">
     <button id="yes">YES 😍</button>
     <button id="no">NO 😈</button>
   </div>
@@ -117,26 +118,38 @@ for(let i=0;i<40;i++){
 
 <script>
 const noBtn=document.getElementById("no");
-const box=document.querySelector(".buttons");
+const yesBtn=document.getElementById("yes");
+const box=document.getElementById("box");
 
-/* 😈 NO BUTTON BHAGTA HAI */
-noBtn.addEventListener("mouseenter",()=>{
-  const maxX=box.clientWidth-noBtn.offsetWidth;
-  const x=Math.random()*maxX;
+/* 😈 NO BUTTON FAST MOVE */
+noBtn.addEventListener("mouseover",()=>{
+  const boxWidth=box.clientWidth;
+  const yesWidth=yesBtn.offsetWidth;
+  const noWidth=noBtn.offsetWidth;
+
+  // YES ke opposite side
+  let x;
+  if(noBtn.offsetLeft < boxWidth/2){
+    x=boxWidth-noWidth-10;
+  }else{
+    x=10;
+  }
+
+  noBtn.style.transition="left 0.15s";
   noBtn.style.left=x+"px";
 });
 
 /* 🎉 HEAVY CONFETTI */
-document.getElementById("yes").onclick=()=>{
-  let end=Date.now()+5000;
+yesBtn.onclick=()=>{
+  let end=Date.now()+6000;
   let interval=setInterval(()=>{
     if(Date.now()>end) return clearInterval(interval);
     confetti({
-      particleCount:80,
-      spread:120,
-      origin:{x:Math.random(),y:Math.random()-0.2}
+      particleCount:90,
+      spread:140,
+      origin:{x:Math.random(),y:Math.random()-0.1}
     });
-  },200);
+  },180);
 };
 </script>
 
