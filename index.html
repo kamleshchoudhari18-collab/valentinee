@@ -2,53 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Krisha ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- CONFETTI LIBRARY -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<title>For You ❤️</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
+*{box-sizing:border-box;font-family:Poppins, sans-serif;}
 body{
+  margin:0;
   height:100vh;
-  background: radial-gradient(circle at top, #ffd6e8, #ff9acb);
+  background:radial-gradient(#ff9acb,#ff4f9a);
   display:flex;
   justify-content:center;
   align-items:center;
   overflow:hidden;
 }
 
-/* CARD */
+/* floating hearts */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:float linear infinite;
+  opacity:.7;
+}
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* card */
 .card{
+  width:360px;
   background:white;
-  width:320px;
   padding:30px;
   border-radius:20px;
   text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
   position:relative;
-}
-
-/* TEXT */
-h2{
-  margin-bottom:25px;
+  z-index:2;
 }
 
 .buttons{
+  margin-top:25px;
+  display:flex;
+  justify-content:space-between;
   position:relative;
-  height:80px;
+  height:60px;
 }
 
-/* BUTTONS */
 button{
-  padding:10px 22px;
+  width:120px;
+  padding:12px;
   border:none;
   border-radius:25px;
   font-size:16px;
@@ -56,93 +58,112 @@ button{
 }
 
 #yes{
-  background:#ff4d6d;
+  background:#ff4f9a;
   color:white;
 }
 
 #no{
   background:#eee;
   position:absolute;
-  left:120px;
-  top:0;
-  transition:0.15s;
+  right:0;
 }
 
-/* SECOND PAGE */
-#page2{
+.note{
+  margin-top:15px;
+  font-size:14px;
+  opacity:.7;
+}
+
+/* second screen */
+#success{
   display:none;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
 }
 
-#page2 h1{
-  font-size:28px;
+.confetti{
+  position:absolute;
+  width:8px;
+  height:14px;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  from{transform:translateY(-10vh) rotate(0deg);}
+  to{transform:translateY(110vh) rotate(720deg);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-<div class="card" id="page1">
-  <h2>😺❤️<br>Krisha Jain,<br>will you be my Valentine?</h2>
+<script>
+/* hearts background */
+for(let i=0;i<30;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=6+Math.random()*6+"s";
+  document.body.appendChild(h);
+}
+</script>
 
-  <div class="buttons">
+<!-- FIRST PAGE -->
+<div class="card" id="page1">
+  <h2>🐱 ❤️</h2>
+  <h3>Krisha Jain,<br>will you be my Valentine?</h3>
+
+  <div class="buttons" id="box">
     <button id="yes">YES</button>
     <button id="no">NO</button>
   </div>
 
-  <p style="margin-top:20px;font-size:14px;">
-    “No” seems a bit shy 😈😈😈
-  </p>
+  <div class="note">“No” seems a bit shy 😈</div>
 </div>
 
-<!-- PAGE 2 -->
-<div class="card" id="page2">
-  <h1>YAY 🎉❤️</h1>
-  <p>I love you Krisha Jain</p>
+<!-- SECOND PAGE -->
+<div class="card" id="success">
+  <h2>🎉 YAYYY ❤️</h2>
+  <h3>You made my day 🥰</h3>
 </div>
 
 <script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
+const noBtn=document.getElementById("no");
+const box=document.getElementById("box");
+const yesBtn=document.getElementById("yes");
 
-/* NO BUTTON MOVE */
-noBtn.addEventListener("mouseenter", () => {
-  const maxX = 200;
-  const maxY = 50;
+/* NO moves fast opposite inside box */
+noBtn.addEventListener("mouseenter",()=>{
+  const bw=box.clientWidth - noBtn.offsetWidth;
+  const bh=box.clientHeight - noBtn.offsetHeight;
 
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
+  let x=Math.random()*bw;
+  let y=Math.random()*bh;
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+  noBtn.style.transition="0.12s";
 });
 
-/* YES CLICK */
-yesBtn.addEventListener("click", () => {
-  page1.style.display = "none";
-  page2.style.display = "flex";
+/* YES click */
+yesBtn.onclick=()=>{
+  document.getElementById("page1").style.display="none";
+  document.getElementById("success").style.display="block";
+  startConfetti();
+};
 
-  // HEAVY CONFETTI
-  const duration = 7000;
-  const end = Date.now() + duration;
+/* heavy confetti */
+function startConfetti(){
+  for(let i=0;i<200;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    c.style.animationDuration=3+Math.random()*3+"s";
+    document.body.appendChild(c);
 
-  (function frame() {
-    confetti({
-      particleCount: 12,
-      spread: 360,
-      origin: { x: Math.random(), y: Math.random() - 0.2 }
-    });
-
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
-    }
-  })();
-});
+    setTimeout(()=>c.remove(),6000);
+  }
+}
 </script>
 
 </body>
