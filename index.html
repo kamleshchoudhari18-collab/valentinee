@@ -21,7 +21,7 @@ body{
   align-items:center;
 }
 
-/* HEARTS */
+/* HEARTS BACKGROUND */
 .heart{
   position:absolute;
   width:18px;
@@ -29,6 +29,7 @@ body{
   background:#ff2d55;
   transform:rotate(45deg);
   animation:float 5s linear infinite;
+  opacity:0.7;
 }
 .heart::before,.heart::after{
   content:'';
@@ -64,7 +65,7 @@ h1{
 
 .btns{
   position:relative;
-  height:140px;
+  height:150px;
 }
 
 button{
@@ -86,9 +87,9 @@ button{
 #no{
   background:white;
   color:#ff4d6d;
-  left:10px;
-  top:70px;
-  transition:0.05s; /* FAST */
+  left:20px;
+  top:90px;
+  transition:0.03s; /* VERY FAST */
 }
 
 .small{
@@ -109,7 +110,7 @@ button{
 }
 
 img{
-  width:220px;
+  width:230px;
   margin-top:20px;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
@@ -119,12 +120,13 @@ img{
 .confetti{
   position:absolute;
   width:8px;
-  height:12px;
+  height:14px;
   background:hsl(var(--h),100%,60%);
-  animation:fall 3s linear infinite;
+  animation:fall 6s linear forwards;
 }
 @keyframes fall{
-  to{transform:translateY(110vh) rotate(360deg);}
+  from{transform:translateY(-10vh) rotate(0);}
+  to{transform:translateY(110vh) rotate(720deg);}
 }
 </style>
 </head>
@@ -147,7 +149,6 @@ img{
 <div class="card hidden" id="page2">
   <div class="yay">YAY 🎉💖</div>
 
-  <!-- HUG IMAGE -->
   <img src="https://i.imgur.com/9Xn6k0B.png" alt="hug">
 
   <p style="color:white;margin-top:15px;font-size:22px;">
@@ -156,37 +157,44 @@ img{
 </div>
 
 <script>
-/* FAST NO BUTTON */
+/* NO BUTTON – FAR AWAY JUMP */
 function moveNo(){
   const no=document.getElementById("no");
-  const x=Math.random()*250;
-  const y=Math.random()*100;
-  no.style.left=x+"px";
-  no.style.top=y+"px";
+
+  const maxX = window.innerWidth - 120;
+  const maxY = window.innerHeight - 80;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  no.style.position = "fixed";
+  no.style.left = x + "px";
+  no.style.top  = y + "px";
 }
 
-/* YES */
+/* YES CLICK */
 function yesClick(){
   document.getElementById("page1").classList.add("hidden");
   document.getElementById("page2").classList.remove("hidden");
-  confetti();
+  heavyConfetti();
 }
 
 /* HEARTS */
-for(let i=0;i<30;i++){
+for(let i=0;i<35;i++){
   let h=document.createElement("div");
   h.className="heart";
   h.style.left=Math.random()*100+"vw";
   document.body.appendChild(h);
 }
 
-/* CONFETTI */
-function confetti(){
-  for(let i=0;i<60;i++){
+/* HEAVY + LONG CONFETTI */
+function heavyConfetti(){
+  for(let i=0;i<180;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
     c.style.setProperty("--h",Math.random()*360);
+    c.style.animationDelay=Math.random()*2+"s";
     document.body.appendChild(c);
   }
 }
