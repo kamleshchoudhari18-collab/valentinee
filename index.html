@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Krisha ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at top,#ffb3c6,#ff758f,#ff4d6d);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* ===== FLOATING HEARTS ===== */
+.heart{
+  position:absolute;
+  width:18px;
+  height:18px;
+  background:#ff2d55;
+  transform:rotate(45deg);
+  animation:float 7s linear infinite;
+  opacity:0.8;
+}
+.heart::before,.heart::after{
+  content:'';
+  position:absolute;
+  width:18px;
+  height:18px;
+  background:#ff2d55;
+  border-radius:50%;
+}
+.heart::before{top:-9px;left:0;}
+.heart::after{left:-9px;top:0;}
+
+@keyframes float{
+  0%{transform:translateY(110vh) rotate(45deg);opacity:1;}
+  100%{transform:translateY(-10vh) rotate(45deg);opacity:0;}
+}
+
+/* ===== CONFETTI ===== */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:12px;
+  background:hsl(var(--hue),100%,60%);
+  animation:fall 4s linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ===== CARD ===== */
+.card{
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(15px);
+  padding:45px 35px;
+  border-radius:30px;
+  text-align:center;
+  box-shadow:0 30px 60px rgba(0,0,0,0.25);
+  animation:zoomIn 1s ease;
+  z-index:5;
+}
+@keyframes zoomIn{
+  from{transform:scale(0.6);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+h1{
+  color:white;
+  font-size:30px;
+  margin-bottom:25px;
+  text-shadow:0 0 15px rgba(255,255,255,0.8);
+}
+
+button{
+  padding:15px 40px;
+  border:none;
+  border-radius:35px;
+  font-size:20px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ff4d6d,#ff758f);
+  color:white;
+  box-shadow:0 12px 25px rgba(0,0,0,0.3);
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.15);
+}
+
+.small{
+  margin-top:18px;
+  color:white;
+  font-size:14px;
+  opacity:0.9;
+}
+
+.hidden{display:none;}
+
+.yay{
+  font-size:42px;
+  color:white;
+  text-shadow:0 0 20px rgba(255,255,255,0.9);
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+.love{
+  margin-top:25px;
+  font-size:22px;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+  <h1>Krisha Jain 💖<br>Will you be my Valentine?</h1>
+  <button onclick="nextPage()">YES 😍</button>
+  <div class="small">No seems a bit shy 😈😈😈</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+  <div class="yay">YAY 🎉💖</div>
+  <div class="love">I love you<br><b>Krisha Jain</b> ❤️</div>
+</div>
+
+<script>
+/* PAGE SWITCH */
+function nextPage(){
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
+  launchConfetti();
+}
+
+/* HEARTS */
+for(let i=0;i<35;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDelay=Math.random()*6+"s";
+  document.body.appendChild(h);
+}
+
+/* CONFETTI BLAST */
+function launchConfetti(){
+  for(let i=0;i<60;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.setProperty("--hue",Math.random()*360);
+    c.style.animationDelay=Math.random()*2+"s";
+    document.body.appendChild(c);
+  }
+}
+</script>
+
+</body>
+</html>
