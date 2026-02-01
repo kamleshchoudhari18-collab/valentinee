@@ -2,92 +2,126 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
+<title>For Krisha ❤️</title>
 
 <style>
-*{box-sizing:border-box;font-family:Poppins,sans-serif;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
 
 body{
-  margin:0;
   height:100vh;
-  background:linear-gradient(135deg,#ff5fa2,#ff8fc7);
   overflow:hidden;
+  background:radial-gradient(circle at top,#ffb3c6,#ff758f,#ff4d6d);
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-/* HEART BACKGROUND */
+/* BACKGROUND HEARTS */
 .heart{
   position:absolute;
-  color:#ff2f92;
-  font-size:22px;
-  animation:floatUp linear infinite;
-  opacity:.7;
+  width:16px;
+  height:16px;
+  background:#ff2d55;
+  transform:rotate(45deg);
+  animation:float 5s linear infinite;
+  opacity:0.7;
 }
-@keyframes floatUp{
-  from{transform:translateY(110vh);}
-  to{transform:translateY(-10vh);}
+.heart::before,.heart::after{
+  content:'';
+  position:absolute;
+  width:16px;
+  height:16px;
+  background:#ff2d55;
+  border-radius:50%;
+}
+.heart::before{top:-8px;}
+.heart::after{left:-8px;}
+
+@keyframes float{
+  from{transform:translateY(110vh) rotate(45deg);}
+  to{transform:translateY(-10vh) rotate(45deg);}
 }
 
 /* CARD */
 .card{
-  width:380px;
-  background:white;
-  padding:30px;
-  border-radius:22px;
-  text-align:center;
-  box-shadow:0 25px 50px rgba(0,0,0,.3);
-  z-index:2;
-}
-
-/* BUTTON AREA */
-.buttons{
-  margin-top:25px;
   position:relative;
-  height:70px;
+  width:360px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(15px);
+  padding:40px;
+  border-radius:30px;
+  text-align:center;
+  box-shadow:0 25px 50px rgba(0,0,0,0.25);
+  z-index:5;
 }
 
+h1{
+  color:white;
+  margin-bottom:25px;
+}
+
+.btn-area{
+  position:relative;
+  height:140px;
+}
+
+/* BUTTONS */
 button{
-  width:120px;
-  padding:12px;
+  padding:14px 32px;
   border:none;
   border-radius:30px;
-  font-size:16px;
+  font-size:18px;
   cursor:pointer;
+  position:absolute;
+  transition:0.02s; /* FAST */
 }
 
 #yes{
-  background:#ff2f92;
+  background:#ff4d6d;
   color:white;
-  position:absolute;
-  left:0;
+  left:50%;
+  transform:translateX(-50%);
 }
 
 #no{
-  background:#eee;
-  position:absolute;
-  right:0;
+  background:white;
+  color:#ff4d6d;
+  left:20px;
+  top:80px;
 }
 
-.note{
-  margin-top:15px;
+.small{
+  margin-top:20px;
+  color:white;
   font-size:14px;
-  opacity:.75;
 }
 
-/* SECOND PAGE */
-#page2{display:none;}
+.hidden{display:none;}
 
+.yay{
+  font-size:38px;
+  color:white;
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{
+  50%{transform:scale(1.1);}
+}
+
+/* CONFETTI */
 .confetti{
   position:absolute;
-  width:10px;
-  height:16px;
-  animation:fall linear forwards;
+  width:8px;
+  height:14px;
+  background:hsl(var(--h),100%,60%);
+  animation:fall 6s linear forwards;
 }
-
 @keyframes fall{
-  from{transform:translateY(-10vh) rotate(0deg);}
+  from{transform:translateY(-10vh) rotate(0);}
   to{transform:translateY(110vh) rotate(720deg);}
 }
 </style>
@@ -95,72 +129,69 @@ button{
 
 <body>
 
-<script>
-/* HEARTS BACKGROUND */
-for(let i=0;i<35;i++){
-  let h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(5+Math.random()*6)+"s";
-  document.body.appendChild(h);
-}
-</script>
-
 <!-- PAGE 1 -->
 <div class="card" id="page1">
-  <h2>Hey Krisha ❤️</h2>
-  <h3>Will you be mine?</h3>
+  <h1>Krisha Jain 💖<br>Will you be my Valentine?</h1>
 
-  <div class="buttons" id="box">
-    <button id="yes">YES</button>
-    <button id="no">NO</button>
+  <div class="btn-area" id="box">
+    <button id="yes" onclick="yesClick()">YES 😍</button>
+    <button id="no">NO 😜</button>
   </div>
 
-  <div class="note">“No” seems a bit shy 😈</div>
+  <div class="small">No seems a bit shy 😈😈😈</div>
 </div>
 
 <!-- PAGE 2 -->
-<div class="card" id="page2">
-  <h2>🎉 YAYYYY 🎉</h2>
-  <h3>I love you<br><span style="color:#ff2f92">Krisha Jain ❤️</span></h3>
+<div class="card hidden" id="page2">
+  <div class="yay">YAY 🎉💖</div>
+  <p style="color:white;margin-top:20px;font-size:22px;">
+    I love you<br><b>Krisha Jain</b> ❤️
+  </p>
 </div>
 
 <script>
-const noBtn=document.getElementById("no");
-const box=document.getElementById("box");
-const yesBtn=document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const box   = document.getElementById("box");
 
-/* FAST NO MOVEMENT (BOX KE ANDAR) */
-noBtn.addEventListener("mouseenter",()=>{
-  const bw=box.clientWidth-noBtn.offsetWidth;
-  const bh=box.clientHeight-noBtn.offsetHeight;
+/* NO BUTTON – OPPOSITE DIRECTION INSIDE BOX */
+box.addEventListener("mousemove",(e)=>{
+  const rect = box.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
 
-  let x=Math.random()*bw;
-  let y=Math.random()*bh;
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
 
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
-  noBtn.style.transition="0.08s";
+  let newX = mouseX < rect.width/2 ? rect.width - btnRect.width - 10 : 10;
+  let newY = mouseY < rect.height/2 ? rect.height - btnRect.height - 10 : 10;
+
+  noBtn.style.left = newX + "px";
+  noBtn.style.top  = newY + "px";
 });
 
 /* YES CLICK */
-yesBtn.onclick=()=>{
-  document.getElementById("page1").style.display="none";
-  document.getElementById("page2").style.display="block";
-  confettiBlast();
-};
+function yesClick(){
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
+  heavyConfetti();
+}
+
+/* BACKGROUND HEARTS */
+for(let i=0;i<35;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+}
 
 /* HEAVY CONFETTI */
-function confettiBlast(){
-  for(let i=0;i<250;i++){
+function heavyConfetti(){
+  for(let i=0;i<200;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-    c.style.animationDuration=(4+Math.random()*4)+"s";
+    c.style.setProperty("--h",Math.random()*360);
+    c.style.animationDelay=Math.random()*2+"s";
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(),8000);
   }
 }
 </script>
